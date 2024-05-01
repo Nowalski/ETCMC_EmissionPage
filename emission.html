@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ETCMC</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #222222;
+            color: #fff;
+        }
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            text-align: center;
+        }
+        h1 {
+            color: #33ff00;
+        }
+        #chartContainer {
+            width: 100%;
+            height: 400px;
+            margin-top: 50px;
+        }
+        #countdown {
+            margin-top: 20px;
+            font-size: 20px;
+            color: #aaa;
+        }
+        .emission-info {
+            margin-top: 50px;
+            background-color: #3333333f;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .emission-info h2 {
+            color: #33ff00;
+        }
+        .emission-info p {
+            color: #fff;
+        }
+        #theme-toggle {
+            background-color: #33ff00;
+            color: #222;
+            border: none;
+            padding: 10px 20px;
+            margin-top: 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .dark-theme {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('https://etcnftstake.vercel.app/static/media/back.2021b3919c2407591b53.jpg');
+    background-size: cover;
+    opacity: 5.5;
+    z-index: -1;
+    transition: opacity 0.5s ease;
+}
+
+
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>ETCMC</h1>
+        <canvas id="chartContainer"></canvas>
+        <div id="countdown">
+            Next Emissions always happen around ±500 Nodes.
+        </div>
+        <div class="emission-info">
+            <h2>Current Emissions daily</h2>
+            <p>Last Emission: <span id="lastEmissionAmount">500</span> ETCPOW</p>
+            <p>Current Emission: <span id="currentEmissionAmount">600</span> ETCPOW</p>
+        </div>
+        <button id="theme-toggle">Toggle Theme</button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const historicData = {
+                labels: ["January", "February", "March", "April", "May", "June"],
+                datasets: [{
+                    label: "Node Counts",
+                    backgroundColor: "rgba(75, 192, 192, 0.2)",
+                    borderColor: "rgba(75, 192, 192, 1)",
+                    data: [5000, 6340, 7500, 9000, 13059, 13059],
+                    borderWidth: 1
+                }]
+            };
+
+            const chartOptions = {
+                scales: {
+                    yAxes: [{
+                        type: 'linear',
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            };
+
+            const ctx = document.getElementById('chartContainer').getContext('2d');
+            const historicChart = new Chart(ctx, {
+                type: 'line',
+                data: historicData,
+                options: chartOptions
+            });
+
+            const lastEmissionAmount = 4.6;
+            const currentEmissionAmount = 2.3;
+
+            document.getElementById('lastEmissionAmount').textContent = lastEmissionAmount;
+            document.getElementById('currentEmissionAmount').textContent = currentEmissionAmount;
+
+            const themeToggleBtn = document.getElementById('theme-toggle');
+            const body = document.body;
+
+            themeToggleBtn.addEventListener('click', function() {
+                body.classList.toggle('dark-theme');
+            });
+        });
+    </script>
+</body>
+</html>
